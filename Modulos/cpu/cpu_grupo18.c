@@ -39,13 +39,18 @@ struct list_head *list;
 
 static int proc_llenar_archivo(struct seq_file *m, void *v) {
 
+    seq_printf(m, "[\n");
+
 	for_each_process(task){
-        seq_printf(m, "PID -> %d, Nombre -> %s, Estado -> %ld\n", task->pid, task->comm, task->state);
+        seq_printf(m, "\n{ \"PID\" : %d, \"Nombre\" : \"%s\", \"Estado\" : %ld },", task->pid, task->comm, task->state);
 	list_for_each(list, &task->children){
 		task_child = list_entry(list, struct task_struct, sibling);
-	        seq_printf(m, "PID -> %d, Nombre -> %s, Estado -> %ld\n", task_child->pid, task_child->comm, task_child->state);
+	        seq_printf(m, "\n{ \"PID\" : %d, \"Nombre\" : \"%s\" , \"Estado\" : %ld },", task_child->pid, task_child->comm, task_child->state);
 		}
 	}
+
+
+    seq_printf(m, "\n]\n");
         return 0;
 }
 
