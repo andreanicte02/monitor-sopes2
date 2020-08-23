@@ -59,7 +59,7 @@ static int proc_llenar_archivo(struct seq_file *m, void *v) {
 
         seq_printf(m, "\n{ \"PID\" : %d, \"Nombre\" : \"%s\", \"Estado\" : %ld , \"uid\" : %i , \"mm\"  : 0,", task->pid, task->comm, task->state, task->cred->uid.val);
 
-		seq_printf(m,"sub: [");
+		seq_printf(m,"\"sub\": [");
 
 		
 		extra = 0;
