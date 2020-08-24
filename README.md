@@ -64,3 +64,49 @@ Desmontar el modulo
 >sudo rmmod mem_grupo18.ko
 ```
 
+# API
+Se necesita tener instalado go
+cd /API
+go get -u github.com/gorilla/mux
+go run main.go
+
+# Funcionamiento API
+
+* Ir a http://localhost:3000/
+```json
+{
+	"StatusCode":200,
+	"Msg":"SERVER OK"
+}
+```
+
+
+* Formato para Procesos CPU http://localhost:3000/cpu
+```json
+[
+	{
+		"PID":int,
+		"Nombre":"string",
+		"Estado":int,
+		"uid":int,
+		"mm":int,
+		"sub":[
+		{
+			"PID":int,
+			"Nombre":"string",
+			"Estado":int,
+			"uid":int,
+			"mm":int
+		},
+		{
+			"PID":int,
+			"Nombre":"string",
+			"Estado":int,
+			"uid":int,
+			"mm":int
+		}
+		]
+	}
+]
+
+```
