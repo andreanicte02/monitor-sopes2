@@ -15,8 +15,11 @@ import (
 // CPU -> /proc/mem_grupo18/mem_grupo18.json
 // RAM -> /proc/cpu_grupo18/cpu_grupo18.json
 // Estos los deje solo para probar
-var ArchivoCPU = "./CPU.json"
-var ArchivoRAM = "./ram.json"
+
+//Deben de tener permisos 444
+//sudo chmod 444 mem_gupo18
+var ArchivoCPU = "/proc/cpu_grupo18"
+var ArchivoRAM = "/proc/mem_grupo18"
 
 type Response struct {
     StatusCode int
@@ -24,12 +27,21 @@ type Response struct {
 }
 
 //Struct para modulo de CPU
-type Proceso struct {	
-	PID int `json:"PID"`
+type Procesos []struct {
+	PID    int    `json:"PID"`
 	Nombre string `json:"Nombre"`
-	Estado int `json:"Estado"`
+	Estado int    `json:"Estado"`
+	UID    int    `json:"uid"`
+	Mm     int    `json:"mm"`
+	Sub    []struct {
+		PID    int    `json:"PID"`
+		Nombre string `json:"Nombre"`
+		Estado int    `json:"Estado"`
+		UID    int    `json:"uid"`
+		Mm     int    `json:"mm"`
+	} `json:"sub"`
 }
-var Procesos [] Proceso
+var P Procesos
 
 //Struct para modulo de RAM
 type ramLectura struct {	
@@ -51,12 +63,15 @@ var RamAcumalada [] StructRam
 func getRAM(w http.ResponseWriter, r *http.Request){
 	data, err := ioutil.ReadFile(ArchivoRAM)
     if err != nil {
-      fmt.Println(err)
+      fmt.Println("error1:",err)
 	}
+	fmt.Println((data))
+	
 	err = json.Unmarshal(data, &Ram)
 	if err != nil {
-        fmt.Println("error:", err)
+        fmt.Println("error2:", err)
 	}
+	
 	structRam := StructRam{
 		float64(Ram.Memoria) / 1024, 
 		float64(Ram.Libre) / 1024,
@@ -78,16 +93,17 @@ func getRAM(w http.ResponseWriter, r *http.Request){
 // localhost:3000/CPU 
 // Metodo GET
 func getCPU(w http.ResponseWriter, r *http.Request){
-	data, err := ioutil.ReadFile(ArchivoCPU)
+	data, err := ioutil.ReadFile(ArchivoCPU)	
     if err != nil {
       fmt.Println(err)
 	}
-	err = json.Unmarshal(data, &Procesos)
+	err = json.Unmarshal(data, &P)
 	if err != nil {
         fmt.Println("error:", err)
 	}
+	
 	w.Header().Set("Content-Type","application/json")
-	json.NewEncoder(w).Encode(Procesos)		
+	json.NewEncoder(w).Encode(P)		
 }
 
 // kill Proceso envio IDproceso
@@ -125,7 +141,7 @@ func indexRoute(w http.ResponseWriter, r *http.Request){
 }
 
 func main()  {
-	fmt.Println("Iniciando Server")
+	fmt.Println(">>>> Iniciando Server")
 	
 	router := mux.NewRouter()
 	router.HandleFunc("/",indexRoute)
@@ -135,3 +151,4 @@ func main()  {
 	http.ListenAndServe(":3000", router)
 
 }
+
