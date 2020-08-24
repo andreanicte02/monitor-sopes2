@@ -75,7 +75,7 @@ Desmontar el modulo
 
 # Funcionamiento API
 
-* Ir a http://localhost:3000/
+* Si todo funciona bien ir a http://localhost:3000/
 ```json
 {
 	"StatusCode":200,
@@ -83,6 +83,9 @@ Desmontar el modulo
 }
 ```
 
+* Formato para Kill Proceso http://localhost:3000/kill/{id}
+	* Metodo: GET
+	* Enviar numero ID del proceso
 
 * Formato para Procesos CPU http://localhost:3000/cpu
 ```json
