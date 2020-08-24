@@ -65,10 +65,13 @@ Desmontar el modulo
 ```
 
 # API
-Se necesita tener instalado go
-cd /API
-go get -u github.com/gorilla/mux
-go run main.go
+
+
+* Se necesita tener instalado go
+* cd /API
+* go get -u github.com/gorilla/mux
+* go run main.go
+
 
 # Funcionamiento API
 
