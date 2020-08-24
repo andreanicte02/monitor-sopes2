@@ -42,9 +42,9 @@ static ssize_t myread(struct file *file, char __user *ubuf,size_t count, loff_t 
 
 	// len += sprintf(buf + len, "%s\n", utsname()->version);
 	
-	len += sprintf(buf + len, "{");
+	len += sprintf(buf + len, "{\n");
 	len += sprintf(buf + len, "\"Memoria\": %li,\n", i.totalram);
-	len += sprintf(buf + len, "\"Libre\": %li,\n", i.freeram);
+	len += sprintf(buf + len, "\"Libre\": %li\n", i.freeram);
 	len += sprintf(buf + len, "}\n");
 
 	if(copy_to_user(ubuf,buf,len))
