@@ -4,6 +4,7 @@ import (
 	"fmt" //imprimir en conosla
 	"net/http" //levantar el server
 	"encoding/json" //formato json
+	"flag"
 	"github.com/gorilla/mux" //para levantar el router
 	"io/ioutil" //Entradas por form
 	"strconv" //String to int
@@ -78,9 +79,9 @@ func getRAM(w http.ResponseWriter, r *http.Request){
 		float64(Ram.Memoria * 100) / float64(Ram.Libre),
 	}
 
-	RamAcumalada = append(RamAcumalada, structRam)
-	
-	js, err := json.Marshal(RamAcumalada)
+	//RamAcumalada = append(RamAcumalada, structRam)
+	//js, err := json.Marshal(RamAcumalada)
+	js, err := json.Marshal(structRam)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -142,13 +143,22 @@ func indexRoute(w http.ResponseWriter, r *http.Request){
 
 func main()  {
 	fmt.Println(">>>> Iniciando Server")
+
+	var dir string
+	flag.StringVar(&dir, "dir", "./so-pra-03-client/build/", "the directory to serve files from. Defaults to the current dir")
+	flag.Parse()
 	
 	router := mux.NewRouter()
+
+	// This will serve files under http://localhost:8000/static/<filename>
+	router.PathPrefix("/client/").Handler(http.StripPrefix("/client/", http.FileServer(http.Dir(dir))))
+
 	router.HandleFunc("/",indexRoute)
 	router.HandleFunc("/cpu",getCPU).Methods("GET")
 	router.HandleFunc("/ram",getRAM).Methods("GET")
 	router.HandleFunc("/kill/{id}",kill).Methods("GET")
-	http.ListenAndServe(":3000", router)
+	fmt.Println(">>>> Iniciado en puerto 8080 ")
+	http.ListenAndServe(":8080", router)
 
 }
 
