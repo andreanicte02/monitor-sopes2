@@ -46,7 +46,7 @@ var P Procesos
 
 //Struct para modulo de RAM
 type ramLectura struct {	
-	Memoria int `json:"Memoria"`
+	Total int `json:"total"`
 	Libre int `json:"Libre"`
 }
 var Ram ramLectura
@@ -66,7 +66,7 @@ func getRAM(w http.ResponseWriter, r *http.Request){
     if err != nil {
       fmt.Println("error1:",err)
 	}
-	fmt.Println((data))
+	//fmt.Println((data))
 	
 	err = json.Unmarshal(data, &Ram)
 	if err != nil {
@@ -74,9 +74,9 @@ func getRAM(w http.ResponseWriter, r *http.Request){
 	}
 	
 	structRam := StructRam{
-		float64(Ram.Memoria) / 1024, 
-		float64(Ram.Libre) / 1024,
-		float64(Ram.Memoria * 100) / float64(Ram.Libre),
+		float64(Ram.Total)/1000, 
+		float64(Ram.Total-Ram.Libre)/1000,
+		float64((Ram.Total-Ram.Libre) * 100) / float64(Ram.Total),
 	}
 
 	//RamAcumalada = append(RamAcumalada, structRam)
