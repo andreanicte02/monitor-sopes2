@@ -26,10 +26,15 @@ React está basado en un paradigma llamado programación orientada a componentes
 
 El sitio web cuenta con dos pestañas
 * RAM
+
 ![RAM](ima/r.jpg)
+
 * Procesos
+
 ![Procesos](ima/p.jpeg)
+
 * Tabla de procesos
+
 ![Procesos](ima/t.jpg)
 
 ---
