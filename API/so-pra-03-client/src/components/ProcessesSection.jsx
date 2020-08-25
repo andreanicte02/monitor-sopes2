@@ -115,17 +115,17 @@ export default class ProcessesSection extends React.Component {
         ];
 
 
-        const runningCount = 1
-        const sleepingCount = 2;
-        const stoppedCount = 3;
-        const zombieCount = 4;
-        const idleCount = 5;
-        const diskSleepCount = 6;
+        // const runningCount = 1
+        // const sleepingCount = 2;
+        // const stoppedCount = 3;
+        // const zombieCount = 4;
+        const idleCount = 0;
+        const diskSleepCount = 0;
 
-        // const runningCount = this.state.tableDataSource.filter(p => p.state.includes("running")).length;
-        // const sleepingCount = this.state.tableDataSource.filter(p => p.state.includes("sleeping")).length;
-        // const stoppedCount = this.state.tableDataSource.filter(p => p.state.includes("stopped")).length;
-        // const zombieCount = this.state.tableDataSource.filter(p => p.state.includes("zombie")).length;
+        const runningCount = this.state.tableDataSource.filter(p => p.Estado === 0).length;
+        const sleepingCount = this.state.tableDataSource.filter(p => p.Estado === 1).length;
+        const stoppedCount = this.state.tableDataSource.filter(p => p.Estado === 128).length;
+        const zombieCount = this.state.tableDataSource.filter(p => p.Estado === 260).length;
         // const idleCount = this.state.tableDataSource.filter(p => p.state.includes("idle")).length;
         // const diskSleepCount = this.state.tableDataSource.filter(p => p.state.includes("disk sleep")).length;
 
