@@ -1,4 +1,12 @@
 # Monitorizaicón de Procesos y Memoria
+# Autores ✒️
+
+
+* Tikiram Samaneb Ruiz Manuel - 201020214
+* Andrea Nicte Vicente Campos 201404104
+* Pablo Javier Blanco Calderon - 201504242
+
+
 ---
 # Objetivos 📝
 
@@ -123,9 +131,15 @@ Desmontar el modulo
 }
 ```
 
-* Formato para RAM http://localhost:8080/ram
+* Formato para Procesos RAM http://localhost:8080/ram
 	* Metodo: GET
-
+```json
+{	
+	"TotalServer": float,
+	"TotalConsumida" float,
+	"Porcentaje" float
+}
+```
 
 * Formato para Kill Proceso http://localhost:8080/kill/{id}
 	* Metodo: GET
