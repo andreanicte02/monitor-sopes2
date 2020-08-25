@@ -21,11 +21,20 @@ import (
 //sudo chmod 444 mem_gupo18
 var ArchivoCPU = "/proc/cpu_grupo18"
 var ArchivoRAM = "/proc/mem_grupo18"
+var ArchivoCON = "/proc/pro_grupo18"
 
 type Response struct {
     StatusCode int
     Msg string
 }
+
+type conteo struct {	
+	Ejecucion int `json:"Ejecucion"`
+	Suspendido int `json:"Suspendido"`
+	Detenido int `json:"Detenido"`
+	Zombie int `json:"Zombie"`
+}
+var C conteo
 
 //Struct para modulo de CPU
 type Procesos []struct {
@@ -134,6 +143,20 @@ func kill(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
+func getConteo(w http.ResponseWriter, r *http.Request){
+	data, err := ioutil.ReadFile(ArchivoCON)	
+    if err != nil {
+      fmt.Println(err)
+	}
+	err = json.Unmarshal(data, &C)
+	if err != nil {
+        fmt.Println("error:", err)
+	}
+	
+	w.Header().Set("Content-Type","application/json")
+	json.NewEncoder(w).Encode(C)
+}
+
 // Ruta Raiz
 func indexRoute(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type","application/json")
@@ -157,6 +180,7 @@ func main()  {
 	router.HandleFunc("/cpu",getCPU).Methods("GET")
 	router.HandleFunc("/ram",getRAM).Methods("GET")
 	router.HandleFunc("/kill/{id}",kill).Methods("GET")
+	router.HandleFunc("/conteo",getConteo).Methods("GET")
 	fmt.Println(">>>> Iniciado en puerto 8080 ")
 	http.ListenAndServe(":8080", router)
 
