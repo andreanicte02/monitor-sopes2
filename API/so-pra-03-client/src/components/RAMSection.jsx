@@ -37,11 +37,16 @@ export default class RAMSection extends React.Component {
                     const values = state.data.slice(1);
 
                     const newValue = {};
-                    newValue.used = response.data.TotalConsumida || 4000000;
-                    newValue.total = response.data.TotalServer || 8000000;
-                    newValue.usedMb = newValue.used / 1024;
-                    newValue.totalMb = newValue.total / 1024;
-                    newValue.usage = newValue.used * 100 / newValue.total;
+                    // newValue.used = response.data.TotalConsumida || 4000000;
+                    // newValue.total = response.data.TotalServer || 8000000;
+                    // newValue.usedMb = newValue.used / 1024;
+                    // newValue.totalMb = newValue.total / 1024;
+                    // newValue.usage = newValue.used * 100 / newValue.total;
+                    newValue.used = response.data.TotalConsumida * 1024;
+                    newValue.total = response.data.TotalServer * 1024;
+                    newValue.usedMb = response.data.TotalConsumida;
+                    newValue.totalMb = response.data.TotalServer;
+                    newValue.usage = newValue.usedMb * 100 / newValue.totalMb;
 
                     values.push(newValue);
                     return { data: values };
