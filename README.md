@@ -1,6 +1,42 @@
-Compilar y montar modulos de kernel
+# Monitorizaicón de Procesos y Memoria
+---
+# Objetivos 📝
 
-# Cpu (procesos)
+* Familiarizarse con la terminal de Linux y comandos de sistema y usuario
+
+* Aprender a crear, monitorizar y montar procesos del Kernell de Linux.
+
+* Poner en práctica los conocimientos sobre el Kernel de Linux.
+---
+## Heramientas 🛠️
+
+* Modulos del Kernel
+	* __mem_grupo18:__ extrae información sobre el uso de memoria en el sistema.
+	* __cpu_grupo18:__ Éste mostrará de manera tabulada todos los procesos que están siendo ejecutados en el
+servidor, así como un resumen de los procesos.
+
+* Go:
+Go es un lenguaje de programación relativamente nuevo; su primera versión fue liberada al público en 2009, [aca el link](https://golang.org/) al sitio Web oficial .
+
+* React:
+React está basado en un paradigma llamado programación orientada a componentes en el que cada componente es una pieza con la que el usuario puede interactuar. Estas piezas se crean usando una sintaxis llamada JSX permitiendo escribir HTML (y opcionalmente CSS) dentro de objetos JavaScript, [aca el link](https://es.reactjs.org/) al sitio Web oficial 
+
+---
+# Navegacion
+
+El sitio web cuenta con dos pestañas
+* RAM
+![RAM](ima/r.jpg)
+* Procesos:
+![Procesos](ima/p.jpeg)
+* Tabla de procesos
+![Procesos](ima/t.jpg)
+
+---
+
+# Modulos de Kernel
+
+## Cpu (procesos)
 
 ```
 >cd Modulos/cpu
@@ -32,8 +68,7 @@ Desmontar el modulo
 ```
 
 
-
-# Ram 
+## Ram 
 
 ```
 >cd Modulos/ram
@@ -73,9 +108,9 @@ Desmontar el modulo
 * go run main.go
 
 
-# Funcionamiento API
+## Funcionamiento API
 
-* Si todo funciona bien ir a http://localhost:3000/
+* Si todo funciona bien ir a http://localhost:8080/
 ```json
 {
 	"StatusCode":200,
@@ -83,11 +118,15 @@ Desmontar el modulo
 }
 ```
 
-* Formato para Kill Proceso http://localhost:3000/kill/{id}
+* Formato para RAM http://localhost:8080/ram
+	* Metodo: GET
+
+
+* Formato para Kill Proceso http://localhost:8080/kill/{id}
 	* Metodo: GET
 	* Enviar numero ID del proceso
 
-* Formato para Procesos CPU http://localhost:3000/cpu
+* Formato para Procesos CPU http://localhost:8080/cpu
 ```json
 [
 	{
